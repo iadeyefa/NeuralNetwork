@@ -88,7 +88,23 @@ def train_digitclassifier(model, dataset):
     """
     model.train()
     """ YOUR CODE HERE """
+    dataloader = DataLoader(dataset, batch_size=64, shuffle=True)
+    optimizer = optim.Adam(model.parameters(), lr=0.001)
 
+    for epoch in range(20):
+        for batch in dataloader:
+            x = batch['x']
+            y = batch['label']
+
+            optimizer.zero_grad()
+            yPred = model(x)
+            loss = digitclassifier_loss(yPred, y)
+            loss.backward()
+            optimizer.step()
+
+        validationAcc = dataset.get_validation_accuracy()
+        if validationAcc >= 0.975:
+            break
 
 def train_languageid(model, dataset):
     """
