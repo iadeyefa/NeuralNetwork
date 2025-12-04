@@ -14,6 +14,9 @@ from torch.utils.data.dataloader import DataLoader
 
 from gpt_model import Character_GPT
 
+from torch.nn import functional
+from models import Attention
+
 
 
 class CharDataset(Dataset):
