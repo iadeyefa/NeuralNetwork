@@ -174,8 +174,10 @@ class LanguageIDModel(Module):
         super(LanguageIDModel, self).__init__()
         "*** YOUR CODE HERE ***"
         # Initialize your model parameters here
-
-
+        hidden_size = 256
+        self.initial_layer = Linear(self.num_chars, hidden_size)
+        self.hidden_layer = Linear(hidden_size, hidden_size)
+        self.output_layer = Linear(hidden_size, len(self.languages))
 
     def forward(self, xs):
         """
@@ -207,7 +209,14 @@ class LanguageIDModel(Module):
                 (also called logits)
         """
         "*** YOUR CODE HERE ***"
+        h = relu(self.initial_layer(xs[0]))
 
+        for i in range(1, len(xs)):
+            z = self.initial_layer(xs[i]) + self.hidden_layer(h)
+            h = relu(z)
+
+        output = self.output_layer(h)
+        return output
 
 
 def Convolve(input: tensor, weight: tensor):

@@ -1,6 +1,5 @@
 from torch import no_grad
-from torch.utils.data import DataLoader
-
+from torch.utils.data import DataLoader, dataloader
 
 """
 Functions you should use.
@@ -122,7 +121,24 @@ def train_languageid(model, dataset):
     """
     model.train()
     "*** YOUR CODE HERE ***"
+    dataloader = DataLoader(dataset, batch_size=32, shuffle=True)
+    optimizer = optim.Adam(model.parameters(), lr=0.005)
 
+    for epoch in range(30):
+        for batch in dataloader:
+            x = batch['x']
+            y = batch['label']
+
+            x == movedim(x, 0, 1)
+            optimizer.zero_grad()
+            yPred = model(x)
+            loss = languageid_loss(yPred, y)
+            loss.backward()
+            optimizer.step()
+
+        validationAcc = dataset.get_validation_accuracy()
+        if validationAcc >= 0.82:
+            break
 
 
 def Train_DigitConvolution(model, dataset):
