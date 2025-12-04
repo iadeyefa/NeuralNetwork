@@ -129,7 +129,7 @@ def train_languageid(model, dataset):
             x = batch['x']
             y = batch['label']
 
-            x == movedim(x, 0, 1)
+            x = movedim(x, 0, 1)
             optimizer.zero_grad()
             yPred = model(x)
             loss = languageid_loss(yPred, y)
