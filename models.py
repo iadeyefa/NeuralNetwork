@@ -62,7 +62,8 @@ class PerceptronModel(Module):
         The pytorch function `tensordot` may be helpful here.
         """
         "*** YOUR CODE HERE ***"
-        return tensordot(x, self.w, dims=([1], [1]))
+        res = matmul(x, self.w.t())
+        return res.squeeze()
         
 
     def get_prediction(self, x):
@@ -74,7 +75,7 @@ class PerceptronModel(Module):
         score = self(x)
 
         "*** YOUR CODE HERE ***"
-        return 1 if score.item() > 0 else -1
+        return 1 if score.item() >= 0 else -1
 
 
 class RegressionModel(Module):
